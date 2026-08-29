@@ -1,8 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { FaXTwitter } from "react-icons/fa6";
-import { GITHUB_REPO_URL, TWITTER_URL } from "@/lib/site";
+import { GITHUB_REPO_URL } from "@/lib/site";
 import { chromeIconButton } from "./chrome";
 
 // The <html> `.dark` class (set pre-paint by the inline script in layout.tsx) is the
@@ -52,16 +51,6 @@ export function ThemeToggle() {
         title="View source on GitHub"
       >
         <GitHubIcon />
-      </a>
-      <a
-        href={TWITTER_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={chromeIconButton}
-        aria-label="Follow on X"
-        title="Follow on X"
-      >
-        <FaXTwitter size={16} aria-hidden />
       </a>
       <button
         type="button"

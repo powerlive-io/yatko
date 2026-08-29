@@ -2,6 +2,7 @@
 
 import { CollapsibleCard } from "./collapsible-card";
 import { CopyButton } from "./copy-button";
+import { SITE_URL } from "@/lib/site";
 
 type ShareItem = {
   label: string;
@@ -10,7 +11,7 @@ type ShareItem = {
 };
 
 export function ShareLinks({ owner, repo }: { owner: string; repo: string }) {
-  const base = "https://yatko.app";
+  const base = SITE_URL;
   // Landing page uses the github.com → yatko.app path (no /p/), so shared
   // links match the product URL and resolve to the same release page.
   const items: ShareItem[] = [

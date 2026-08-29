@@ -1,17 +1,18 @@
 import { ImageResponse } from "next/og";
-import { EXAMPLE_REPOS } from "@/lib/example-repos";
+import { PROJECTS } from "@/lib/projects";
 import { outfitFontOption } from "@/lib/og-font";
+import { SITE_DOMAIN, SITE_NAME } from "@/lib/site";
 import { getRelease } from "./backend";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Yatko download page preview";
+export const alt = `${SITE_NAME} download page preview`;
 /** Match release-page ISR (literal required for Next segment config). */
 export const revalidate = 3600;
 
 /** Same seed as the release page — enables on-demand ISR for other repos. */
 export function generateStaticParams() {
-  return EXAMPLE_REPOS.map(({ owner, repo }) => ({ owner, repo }));
+  return PROJECTS.map(({ owner, repo }) => ({ owner, repo }));
 }
 
 type Props = { params: Promise<{ owner: string; repo: string }> };
@@ -42,7 +43,7 @@ export default async function Image({ params }: Props) {
           padding: "0 80px",
         }}
       >
-        <div style={{ display: "flex", fontSize: 28, color: "#a1a1aa", marginBottom: 28 }}>yatko.app</div>
+        <div style={{ display: "flex", fontSize: 28, color: "#a1a1aa", marginBottom: 28 }}>{SITE_DOMAIN}</div>
         <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
           {avatarUrl && (
             // eslint-disable-next-line @next/next/no-img-element

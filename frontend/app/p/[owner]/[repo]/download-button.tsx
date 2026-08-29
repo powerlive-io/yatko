@@ -3,6 +3,7 @@
 import { platformLabels, formatSize, type Platform, type Asset } from "./platform-utils";
 import { CopyButton } from "./copy-button";
 import { downloadCta } from "./download-cta";
+import { SITE_URL } from "@/lib/site";
 
 export function DownloadButton({
   owner,
@@ -39,7 +40,7 @@ export function DownloadButton({
           {label}
         </a>
         <CopyButton
-          text={`https://yatko.app/${owner}/${repo}`}
+          text={`${SITE_URL}/${owner}/${repo}`}
           label="Copy link to this page"
           size={20}
           className="shrink-0 inline-flex size-12 items-center justify-center rounded-xl border border-border text-foreground/50 hover:text-foreground hover:bg-foreground/5 transition-colors"

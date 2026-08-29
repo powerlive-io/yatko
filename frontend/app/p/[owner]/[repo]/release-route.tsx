@@ -3,6 +3,7 @@ import { ReleasePageBody } from "./release-page";
 import { getChecksums, getReadme, getRelease, getReleases } from "./backend";
 import { ReleaseError } from "./release-error";
 import { NotFoundCard } from "./not-found";
+import { SITE_NAME } from "@/lib/site";
 
 export function releasePageMetadata({
   owner,
@@ -17,8 +18,8 @@ export function releasePageMetadata({
     ? `Download ${owner}/${repo} ${version}`
     : `Download ${owner}/${repo}`;
   const description = version
-    ? `Download ${owner}/${repo} ${version} on Yatko (yatko.app) — the right GitHub release asset for your OS and architecture.`
-    : `Download the latest ${owner}/${repo} release on Yatko (yatko.app) — swap github.com for clean, platform-aware download links.`;
+    ? `在 ${SITE_NAME} 下载 ${owner}/${repo} ${version}。`
+    : `在 ${SITE_NAME} 下载 ${owner}/${repo} 的最新版本。`;
   // Latest releases use the github.com → yatko.app path. Version pins stay
   // under /p/ (no bare /:owner/:repo/:version rewrite).
   const canonicalPath = version
@@ -32,7 +33,7 @@ export function releasePageMetadata({
     url: `/${owner}/${repo}/opengraph-image`,
     width: 1200,
     height: 630,
-    alt: `${owner}/${repo} on Yatko`,
+    alt: `${owner}/${repo} on ${SITE_NAME}`,
   };
   return {
     title,
@@ -44,7 +45,7 @@ export function releasePageMetadata({
       title,
       description,
       type: "website",
-      siteName: "Yatko",
+      siteName: SITE_NAME,
       url: canonicalPath,
       images: [ogImage],
     },

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { EXAMPLE_REPOS } from "@/lib/example-repos";
+import { PROJECTS } from "@/lib/projects";
 import {
   releasePageMetadata,
   renderReleasePage,
@@ -27,7 +27,7 @@ export const revalidate = 3600;
 
 export function generateStaticParams() {
   // Latest release only (no version segment). Version pins stay on-demand.
-  return EXAMPLE_REPOS.map(({ owner, repo }) => ({ owner, repo }));
+  return PROJECTS.map(({ owner, repo }) => ({ owner, repo }));
 }
 
 function versionFromParams(version: string[] | undefined): string | undefined {

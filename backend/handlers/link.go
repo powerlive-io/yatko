@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/argval/yatko/picker"
+	"github.com/gin-gonic/gin"
 )
 
 // LinkHandler serves /api/link/:owner/:repo[/:version], returning JSON with the
@@ -78,7 +78,7 @@ func (h *LinkHandler) handle(c *gin.Context, owner, repo, version string) {
 	}
 
 	c.JSON(http.StatusOK, LinkResponse{
-		URL:      asset.BrowserDownloadURL,
+		URL:      h.redirect.assetURL(c, owner, repo, release.TagName, *asset),
 		Filename: asset.Name,
 		Size:     asset.Size,
 		Platform: string(platform),

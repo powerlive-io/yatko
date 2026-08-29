@@ -93,6 +93,12 @@ func (h *PageHandler) handle(c *gin.Context, owner, repo, version string) {
 		return
 	}
 
+	assets := make([]github.Asset, len(release.Assets))
+	copy(assets, release.Assets)
+	for i := range assets {
+		assets[i].BrowserDownloadURL = h.redirect.assetURL(c, owner, repo, release.TagName, assets[i])
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"owner":        owner,
 		"repo":         repo,
@@ -104,7 +110,7 @@ func (h *PageHandler) handle(c *gin.Context, owner, repo, version string) {
 		"published_at": release.PublishedAt,
 		"html_url":     release.HTMLURL,
 		"prerelease":   release.Prerelease,
-		"assets":       release.Assets,
+		"assets":       assets,
 		"releases":     releases,
 	})
 }

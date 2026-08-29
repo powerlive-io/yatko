@@ -16,7 +16,7 @@ export function SiteJsonLd() {
         "@type": "Organization",
         "@id": `${SITE_URL}/#organization`,
         name: SITE_NAME,
-        alternateName: [SITE_DOMAIN, "Yatko App"],
+        alternateName: [SITE_DOMAIN, "PowerLive"],
         url: SITE_URL,
         logo: {
           "@type": "ImageObject",
@@ -29,9 +29,9 @@ export function SiteJsonLd() {
         "@id": `${SITE_URL}/#website`,
         url: SITE_URL,
         name: SITE_NAME,
-        alternateName: [SITE_DOMAIN, "Yatko App"],
+        alternateName: [SITE_DOMAIN, "PowerLive"],
         description: SITE_DESCRIPTION,
-        inLanguage: "en-US",
+        inLanguage: "zh-CN",
         publisher: { "@id": `${SITE_URL}/#organization` },
       },
       {

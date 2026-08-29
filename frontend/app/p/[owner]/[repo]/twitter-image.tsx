@@ -1,4 +1,4 @@
-import { EXAMPLE_REPOS } from "@/lib/example-repos";
+import { PROJECTS } from "@/lib/projects";
 
 export { default, alt, size, contentType } from "./opengraph-image";
 
@@ -7,5 +7,5 @@ export { default, alt, size, contentType } from "./opengraph-image";
 export const revalidate = 3600;
 
 export function generateStaticParams() {
-  return EXAMPLE_REPOS.map(({ owner, repo }) => ({ owner, repo }));
+  return PROJECTS.map(({ owner, repo }) => ({ owner, repo }));
 }

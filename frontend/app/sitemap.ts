@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
+import { PROJECTS } from "@/lib/projects";
 
-/** Crawlable marketing surface only — release pages are unbounded (`/p/` and
- *  the github-swap `/:owner/:repo` rewrite) and stay out of the sitemap. */
+/** Fixed project pages are part of this portal's crawlable public surface. */
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
   return [
@@ -18,5 +18,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    ...PROJECTS.map(({ owner, repo }) => ({
+      url: `${SITE_URL}/${owner}/${repo}`,
+      lastModified,
+      changeFrequency: "daily" as const,
+      priority: 0.8,
+    })),
   ];
 }

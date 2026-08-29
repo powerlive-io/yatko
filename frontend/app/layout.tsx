@@ -39,6 +39,11 @@ export const metadata: Metadata = {
   creator: SITE_NAME,
   publisher: SITE_NAME,
   category: "technology",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
   alternates: {
     canonical: "/",
   },
@@ -75,7 +80,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="zh-CN"
       className={`${outfit.variable} ${jetbrainsMono.variable} ${outfit.className} h-full antialiased`}
       suppressHydrationWarning
     >

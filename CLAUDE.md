@@ -4,12 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Yatko turns a GitHub repo into clean, permanent download links (`yatko.app/dl/:owner/:repo`) that auto-detect the visitor's platform/arch and redirect to the right release asset. One Vercel project, deployed as two [Services](https://vercel.com/docs/services) sharing a domain:
+PowerLive.io is a fixed-project download portal based on Yatko. It auto-detects
+the visitor's platform/arch and redirects to the right release asset. The
+frontend and backend can be deployed as separate Coolify services:
 
 - `backend/` — Go + Gin API, deployed as a container-image service (`backend/Dockerfile`)
 - `frontend/` — Next.js 16 (App Router, React 19), deployed as the default Node.js service
 
-Root-level `vercel.json` defines both services and the rewrites that route `/dl`, `/api`, `/health` to the backend and everything else to the frontend. See the root `README.md` for the public route table and feature list — don't duplicate that here.
+Root-level `vercel.json` remains available for Vercel deployments. In Coolify,
+the frontend's Next rewrites proxy `/dl`, `/api`, `/code`, and `/health` to
+`BACKEND_URL`.
 
 ## Commands
 
@@ -28,7 +32,12 @@ go test ./cache/ -run TestName    # run a single test
 go build ./...                    # compile check
 ```
 
-Useful local env vars: `GITHUB_TOKEN` (a GitHub personal access token — classic PAT with no scopes is enough for public read; raises REST from 60→5000 req/hr and Search from 10→30 req/min), `UPSTASH_REDIS_URL` (cache no-ops without it — Redis also makes repeated search queries near-instant), `CACHE_TTL_SECONDS`, `CACHE_REFRESH_SECRET` (required value for `?refresh=` cache bust on `/api/release/...`; ignored when unset), `RATE_LIMIT_RPM`, `SEARCH_RATE_LIMIT_RPM` (stricter per-IP cap on `/api/search`, default 20), `PORT`.
+Useful backend env vars: `GITHUB_TOKEN`, `OSS_ENDPOINT`, `OSS_BUCKET`,
+`OSS_ENDPOINT`, `OSS_BUCKET`, `OSS_ACCESS_KEY_ID`, `OSS_ACCESS_KEY_SECRET`, `RELEASE_CDN_URL`,
+`RELEASE_SYNC_INTERVAL`, `RELEASE_SYNC_LIMIT`, `ALLOWED_REPOS`,
+`TRUSTED_PROXIES`, `REDIS_URL`, `CACHE_TTL_SECONDS`,
+`CACHE_REFRESH_SECRET`, `RATE_LIMIT_RPM`, and `PORT`. See
+`docs/backend-release-sync.md` for the OSS worker configuration.
 
 ### Frontend (`frontend/`)
 
@@ -57,10 +66,14 @@ Request flow for a download: `main.go` wires a single `github.Client` and `cache
   - **Stale-while-error**: if GitHub is unreachable or rate-limited, serve the last known-good value when one exists.
   - **Rate-limit budget guard**: the GitHub client refuses new requests once `X-RateLimit-Remaining` drops below a reserve (200), so bursts of cold repos fail fast with 429 instead of starving already-cached ones. Tracks `X-RateLimit-Reset` and clears the observed budget once that window ends so the guard doesn't stick until process restart.
 - **`picker/`** — pure platform/arch detection and asset-matching logic (User-Agent parsing → OS/arch → best-matching release asset). No I/O.
+- **`releasesync/`** — long-running GitHub → OSS release mirror. Polls the allowlisted repositories, streams missing assets to OSS, and writes `_manifest.json` last.
+- **`cdn/`** — rewrites an asset to `RELEASE_CDN_URL` only when the completion manifest is reachable, otherwise preserving the GitHub URL.
 - **`handlers/`** — Gin route handlers, one file per route family (`redirect`, `link`, `page`, `releases`, `search`). Each handler fetches via `cache.FetchCached(ctx, cache, key, ghClientCall)`, then hands assets to `picker` if it needs to pick one.
 - **`middleware/`** — per-IP HTTP rate limit (`RATE_LIMIT_RPM`, default 120/min); no-ops without `UPSTASH_REDIS_URL`. When Redis is configured but unreachable, falls back to a process-local fixed window instead of failing open. Separate from the GitHub cache/rate-limit budget above. `/api/search` also has a tighter prefixed budget (`SEARCH_RATE_LIMIT_RPM`, default 20).
 
-No CORS policy: frontend and backend are Vercel services sharing one origin, so only same-origin requests ever reach the API. `main.go` trusts the `X-Forwarded-For` header for the per-IP rate limiter's client identity — safe because Vercel's edge overwrites that header and never forwards a client-supplied value.
+No CORS policy: the deployment proxy presents frontend and backend under one
+public origin. `main.go` only honors forwarded client IPs from
+`TRUSTED_PROXIES`; leave it unset rather than trusting an unknown proxy range.
 
 ## Frontend architecture
 

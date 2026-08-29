@@ -1,65 +1,25 @@
-<p align="center">
-  <img src="frontend/assets/brand/yatko-mark-256.png" alt="Yatko logo" width="96" height="96" />
-</p>
+# PowerLive.io
 
-# Yatko
+**[app.powerlive.io](https://app.powerlive.io)** — PowerLive 直播工具的统一下载中心。
 
-**[yatko.app](https://yatko.app)** — clean download links for any public GitHub release so that you don't have to be called a ["Smelly Nerd"](https://www.reddit.com/r/github/s/7YaS7nTVup) anymore.
+从简洁的项目页获取最新版本。下载按钮会识别访客的操作系统和架构，并选择合适的 GitHub Release 附件。
 
-Swap the domain — that's it. Same `owner/repo` path as GitHub, one click to the right binary for your users' platform and architecture.
+## Projects
 
-```
-github.com/cli/cli  →  yatko.app/cli/cli
-```
-
-<p align="center">
-  <a href="https://www.producthunt.com/products/yatko?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-yatko" target="_blank" rel="noopener noreferrer">
-    <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1227238&theme=light&t=1787658051325" alt="Yatko – The download button GitHub forgot to add on Product Hunt" width="250" height="54" />
-  </a>
-</p>
-
-Website: [https://yatko.app](https://yatko.app) · Source: [github.com/argval/yatko](https://github.com/argval/yatko)
-
-Need a direct download (no landing page)? Add `/dl`:
-
-```
-https://yatko.app/dl/cli/cli
-```
-
----
-
-## What it does
-
-Most GitHub projects bury downloads in a releases page with 15+ assets. Yatko gives you the same URL shape as GitHub, plus smart links that pick the right asset automatically:
-
-| URL | What it does |
-|-----|-------------|
-| `/:owner/:repo` | Landing page — same path as `github.com/owner/repo`, just swap the domain |
-| `/p/:owner/:repo/:version` | Landing page for a specific release tag |
-| `/dl/:owner/:repo` | Detects platform + arch, redirects straight to the right binary (`?platform=`, `?arch=`, `?prefer=`, `?libc=` overrides) |
-| `/dl/:owner/:repo/:version` | Same, but for a specific release tag |
-| `/code/:owner/:repo` | Downloads the default branch as a ZIP source archive (`?tag=v1.2.3` pins a release tag) |
-| `/api/link/:owner/:repo` | JSON with resolved download URL — for CI/scripts (same query overrides as `/dl`) |
-| `/api/releases/:owner/:repo` | List of recent releases (tag, date, prerelease flag) |
-| `/api/readme/:owner/:repo` | Raw README markdown (install commands / About section) |
-| `/api/search?q=` | GitHub repo search — homepage autocomplete suggestions |
+- **[Bili ShadowReplay](https://app.powerlive.io/Xinrea/bili-shadowreplay)** — bilibili 直播实时切片工具
+- **[JLiverTool](https://app.powerlive.io/Xinrea/JLiverTool)** — Bilibili 弹幕机
+- **[JoiAsk](https://app.powerlive.io/Xinrea/JoiAsk)** — 开源匿名提问箱
 
 ## Features
 
-- **Repo search** — type a name on the homepage and pick from live GitHub suggestions
-- **Platform detection** — Windows / macOS / Linux from User-Agent
-- **Architecture detection** — amd64 / arm64 / arm / 386 from User-Agent and `navigator.userAgentData`
-- **Format & libc overrides** — pin package type (`?prefer=deb`) or musl/gnu/static (`?libc=musl`) on `/dl` and `/api/link`
-- **Source code downloads** — grab a ZIP of the default branch or the release currently on screen
-- **Version selector** — browse and switch between recent releases in the UI
-- **Pre-release toggle** — opt into alpha/beta builds when available
-- **Asset checksums** — automatically fetches and displays SHA256 for the selected binary, with a copyable verify command
-- **Quick Install** — extracts package manager commands from the README (`pip`, `npm`, `cargo`, `brew`, `winget`, `choco`, `scoop`, `apt`, and more)
-- **Platform filter** — "My platform only" toggle in the All Downloads list
-- **Download counts** — shows per-asset download counts from GitHub
-- **Share links** — copyable Yatko URLs for smart download, landing page, API, and a README Markdown snippet
-- **Dark mode** — system preference detection + manual toggle
+- **平台识别** — 自动识别 Windows、macOS、Linux 和 CPU 架构
+- **版本选择** — 浏览正式版本与预发布版本
+- **智能下载** — 从 Release 附件中选择最适合当前平台的文件
+- **CDN 下载** — Release 附件同步至阿里云 OSS，并通过 CDN 分发
+- **可靠回退** — 新版本同步完成前继续使用 GitHub 下载地址
+- **文件校验** — 读取并展示 Release 中提供的校验和
+- **发布说明** — 在下载页直接显示 README 与 Release Notes
 
 ## License
 
-Yatko is free and open-source software under the [MIT License](LICENSE).
+PowerLive.io is based on Yatko and is available under the [MIT License](LICENSE).

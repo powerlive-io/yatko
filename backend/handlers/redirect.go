@@ -5,19 +5,21 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/argval/yatko/cache"
+	"github.com/argval/yatko/cdn"
 	"github.com/argval/yatko/github"
 	"github.com/argval/yatko/picker"
+	"github.com/gin-gonic/gin"
 )
 
 type RedirectHandler struct {
-	gh    *github.Client
-	cache *cache.Cache
+	gh       *github.Client
+	cache    *cache.Cache
+	resolver *cdn.Resolver
 }
 
-func NewRedirectHandler(gh *github.Client, c *cache.Cache) *RedirectHandler {
-	return &RedirectHandler{gh: gh, cache: c}
+func NewRedirectHandler(gh *github.Client, c *cache.Cache, resolver *cdn.Resolver) *RedirectHandler {
+	return &RedirectHandler{gh: gh, cache: c, resolver: resolver}
 }
 
 func (h *RedirectHandler) Handle(c *gin.Context) {
@@ -52,7 +54,11 @@ func (h *RedirectHandler) handle(c *gin.Context, owner, repo, version string) {
 		return
 	}
 
-	c.Redirect(http.StatusFound, asset.BrowserDownloadURL)
+	c.Redirect(http.StatusFound, h.assetURL(c, owner, repo, release.TagName, *asset))
+}
+
+func (h *RedirectHandler) assetURL(c *gin.Context, owner, repo, tag string, asset github.Asset) string {
+	return h.resolver.AssetURL(c.Request.Context(), owner, repo, tag, asset.Name, asset.BrowserDownloadURL)
 }
 
 // getRelease returns the release for owner/repo — the latest when version is

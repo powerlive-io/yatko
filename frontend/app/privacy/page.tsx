@@ -1,24 +1,25 @@
 import type { Metadata } from "next";
 import { BackToYatko } from "@/components/back-to-yatko";
+import { GITHUB_REPO_URL, SITE_NAME } from "@/lib/site";
 
 const title = "Privacy";
 const description =
-  "Privacy policy for Yatko (yatko.app) — what we collect, cache, and do not store when you use clean GitHub release download links.";
+  `Privacy policy for ${SITE_NAME}.`;
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/privacy" },
   openGraph: {
-    title: "Privacy · Yatko",
+    title: `Privacy · ${SITE_NAME}`,
     description,
     type: "website",
-    siteName: "Yatko",
+    siteName: SITE_NAME,
     url: "/privacy",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Privacy · Yatko",
+    title: `Privacy · ${SITE_NAME}`,
     description,
   },
 };
@@ -31,14 +32,13 @@ export default function PrivacyPage() {
         <article className="mx-auto max-w-xl space-y-8 text-sm leading-relaxed text-foreground/90">
           <div className="space-y-3">
             <h1 className="text-3xl font-semibold tracking-tight text-foreground">Privacy</h1>
-            <p className="text-muted">Last updated July 30, 2026</p>
           </div>
 
         <section className="space-y-3">
-          <h2 className="text-base font-medium text-foreground">What Yatko is</h2>
+          <h2 className="text-base font-medium text-foreground">What PowerLive.io is</h2>
           <p>
-            Yatko turns public GitHub release pages into clean download links. It is an
-            independent project and is{" "}
+            PowerLive.io provides download pages for Xinrea&apos;s public projects. It is an
+            independent service and is{" "}
             <strong className="font-medium text-foreground">not affiliated with GitHub, Inc.</strong>
           </p>
         </section>
@@ -46,25 +46,24 @@ export default function PrivacyPage() {
         <section className="space-y-3">
           <h2 className="text-base font-medium text-foreground">What we fetch</h2>
           <p>
-            When you visit a Yatko URL, our servers request public metadata from GitHub’s API
-            (releases, assets, README content, and repo search suggestions). Downloads redirect
-            you to GitHub’s own asset URLs — Yatko does not proxy or store the binary files.
+            Our servers request public release metadata and README content from GitHub. Release
+            assets are copied to Alibaba Cloud OSS and normally delivered through our CDN. GitHub
+            may be used as a temporary fallback while a new release is synchronizing.
           </p>
         </section>
 
         <section className="space-y-3">
           <h2 className="text-base font-medium text-foreground">Caching</h2>
           <p>
-            Public release and search responses may be cached briefly so the same repo does not
-            hit GitHub on every request. Cache entries are about public repo data, not your
-            identity.
+            Public release responses and files may be cached to improve download speed. These
+            entries contain public project data, not your identity.
           </p>
         </section>
 
         <section className="space-y-3">
           <h2 className="text-base font-medium text-foreground">Accounts and personal data</h2>
           <p>
-            Yatko has no user accounts and does not ask for a login. We do not sell personal data.
+            PowerLive.io has no user accounts and does not ask for a login. We do not sell personal data.
             Like most websites, infrastructure logs may briefly include technical details such as
             IP address, User-Agent, and the path requested — used for rate limiting, abuse
             prevention, and keeping the service reliable.
@@ -84,12 +83,12 @@ export default function PrivacyPage() {
           <p>
             Questions or requests: open an issue on{" "}
             <a
-              href="https://github.com/argval/yatko"
+              href={GITHUB_REPO_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium text-foreground underline underline-offset-2 hover:no-underline"
             >
-              github.com/argval/yatko
+              github.com/Xinrea/yatko
             </a>
             . The project source is available under the MIT License.
           </p>

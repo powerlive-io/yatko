@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SITE_NAME } from "@/lib/site";
 import { chromeTextButton } from "./chrome";
 
 export function BackToYatko() {
@@ -6,10 +7,10 @@ export function BackToYatko() {
     <Link
       href="/"
       className={`fixed top-4 left-4 z-50 ${chromeTextButton}`}
-      aria-label="Back to Yatko homepage"
+      aria-label={`Back to ${SITE_NAME} homepage`}
     >
       <BackIcon />
-      Yatko
+      {SITE_NAME}
     </Link>
   );
 }
