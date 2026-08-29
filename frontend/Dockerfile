@@ -1,6 +1,11 @@
-FROM oven/bun:1.3.10-slim AS builder
+FROM oven/bun:1.3.10-slim AS bun
+
+
+FROM node:22-bookworm-slim AS builder
 
 WORKDIR /app
+
+COPY --from=bun /usr/local/bin/bun /usr/local/bin/bun
 
 COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
@@ -11,7 +16,7 @@ ARG BACKEND_URL=http://localhost:8080
 ENV BACKEND_URL=$BACKEND_URL
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN bun run build
+RUN node node_modules/next/dist/bin/next build
 
 
 FROM node:22-bookworm-slim AS runner
