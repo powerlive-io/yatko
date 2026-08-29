@@ -9,10 +9,10 @@ type Props = {
   params: Promise<{ owner: string; repo: string; version?: string[] }>;
 };
 
-/** Cache release HTML/RSC for an hour. Platform is detected client-side so we
+/** Cache release HTML/RSC for a minute. Platform is detected client-side so we
  *  avoid headers()-forced dynamic rendering. Literal required for Next segment
  *  config static analysis — keep aligned with BACKEND_FETCH_REVALIDATE_SECONDS /
- *  Redis soft TTL.
+ *  the backend CDN availability cache.
  *
  *  Optional catch-all (not a sibling `[version]` segment) so `/p/o/r` and
  *  `/p/o/r/tag` share one route tree. A nested `[version]` page was tripping
@@ -23,7 +23,7 @@ type Props = {
  *  `revalidate` alone still leaves the route fully dynamic (`private, no-store`).
  *  Seed homepage examples; unknown owner/repo paths still generate on demand
  *  (`dynamicParams` default true). */
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export function generateStaticParams() {
   // Latest release only (no version segment). Version pins stay on-demand.
