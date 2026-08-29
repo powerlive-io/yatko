@@ -2,7 +2,7 @@
 export const SITE_URL = "https://app.powerlive.io";
 export const SITE_NAME = "PowerLive.io";
 export const SITE_DOMAIN = "app.powerlive.io";
-export const GITHUB_REPO_URL = "https://github.com/Xinrea/yatko";
+export const GITHUB_REPO_URL = "https://github.com/powerlive-io/yatko";
 
 export const SITE_TAGLINE = "直播工具";
 

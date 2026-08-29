@@ -88,7 +88,7 @@ export default function PrivacyPage() {
               rel="noopener noreferrer"
               className="font-medium text-foreground underline underline-offset-2 hover:no-underline"
             >
-              github.com/Xinrea/yatko
+              github.com/powerlive-io/yatko
             </a>
             . The project source is available under the MIT License.
           </p>
