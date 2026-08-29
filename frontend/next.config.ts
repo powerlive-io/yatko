@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const backendURL = process.env.BACKEND_URL || "http://localhost:8080";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   reactCompiler: true,
   // TypeScript 7 ships a native compiler without the classic JS API that
   // Next's default typecheck uses — run project-local `tsc` instead.
