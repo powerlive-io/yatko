@@ -37,7 +37,7 @@ export default function PrivacyPage() {
         <section className="space-y-3">
           <h2 className="text-base font-medium text-foreground">What PowerLive.io is</h2>
           <p>
-            PowerLive.io provides download pages for Xinrea&apos;s public projects. It is an
+            PowerLive.io provides download pages for the powerlive-io organization&apos;s public projects. It is an
             independent service and is{" "}
             <strong className="font-medium text-foreground">not affiliated with GitHub, Inc.</strong>
           </p>

@@ -1,20 +1,20 @@
 export const PROJECTS = [
   {
-    owner: "Xinrea",
+    owner: "powerlive-io",
     repo: "bili-shadowreplay",
-    name: "Bili ShadowReplay",
+    name: "BiliShadowReplay",
     description: "bilibili 直播实时切片工具",
   },
   {
-    owner: "Xinrea",
+    owner: "powerlive-io",
     repo: "JLiverTool",
     name: "JLiverTool",
     description: "Bilibili 弹幕机",
   },
   {
-    owner: "Xinrea",
-    repo: "JoiAsk",
-    name: "JoiAsk",
-    description: "开源匿名提问箱",
+    owner: "powerlive-io",
+    repo: "bili-messenger",
+    name: "BiliMessenger",
+    description: "Bilibili 舰长私信群发助手",
   },
 ] as const;

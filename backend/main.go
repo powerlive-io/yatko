@@ -27,7 +27,7 @@ import (
 // set a Redis URL so limits are shared across instances.
 const defaultRateLimitRPM = 120
 
-const defaultAllowedRepos = "Xinrea/bili-shadowreplay,Xinrea/JLiverTool,Xinrea/JoiAsk"
+const defaultAllowedRepos = "powerlive-io/bili-shadowreplay,powerlive-io/JLiverTool,powerlive-io/bili-messenger"
 
 func main() {
 	ghClient := github.NewClient()

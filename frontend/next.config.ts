@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { PROJECTS } from "./lib/projects";
 
 const backendURL = process.env.BACKEND_URL || "http://localhost:8080";
 
@@ -9,6 +10,16 @@ const nextConfig: NextConfig = {
   // Next's default typecheck uses — run project-local `tsc` instead.
   experimental: {
     useTypeScriptCli: true,
+  },
+  async redirects() {
+    // Keep shared download pages and version-pinned links working after transfer.
+    return PROJECTS.flatMap(({ owner, repo }) =>
+      ["", "/p", "/api/release", "/api/releases", "/api/readme", "/api/link", "/dl", "/code"].map((prefix) => ({
+        source: `${prefix}/Xinrea/${repo}/:path*`,
+        destination: `${prefix}/${owner}/${repo}/:path*`,
+        permanent: true,
+      })),
+    );
   },
   async rewrites() {
     // Local/dev proxy to the Go backend. On Vercel, root vercel.json routes

@@ -11,7 +11,7 @@ import (
 func TestAllowedRepositories(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	router := gin.New()
-	router.Use(AllowedRepositories(RepositoryAllowlist("Xinrea/JLiverTool, Xinrea/JoiAsk")))
+	router.Use(AllowedRepositories(RepositoryAllowlist("powerlive-io/bili-shadowreplay, powerlive-io/JLiverTool, powerlive-io/bili-messenger")))
 	router.GET("/api/release/:owner/:repo", func(c *gin.Context) {
 		c.Status(http.StatusNoContent)
 	})
@@ -20,8 +20,12 @@ func TestAllowedRepositories(t *testing.T) {
 		path string
 		want int
 	}{
-		{path: "/api/release/Xinrea/JLiverTool", want: http.StatusNoContent},
-		{path: "/api/release/xinrea/jlivertool", want: http.StatusNoContent},
+		{path: "/api/release/powerlive-io/JLiverTool", want: http.StatusNoContent},
+		{path: "/api/release/POWERLIVE-IO/jlivertool", want: http.StatusNoContent},
+		{path: "/api/release/powerlive-io/bili-shadowreplay", want: http.StatusNoContent},
+		{path: "/api/release/powerlive-io/bili-messenger", want: http.StatusNoContent},
+		{path: "/api/release/powerlive-io/JoiAsk", want: http.StatusNotFound},
+		{path: "/api/release/Xinrea/JLiverTool", want: http.StatusNotFound},
 		{path: "/api/release/other/project", want: http.StatusNotFound},
 	} {
 		request := httptest.NewRequest(http.MethodGet, test.path, nil)

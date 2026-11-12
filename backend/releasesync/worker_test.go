@@ -58,18 +58,18 @@ func TestSyncReleaseWritesManifestLastAndIsIdempotent(t *testing.T) {
 			Size:               int64(len("release")),
 		}},
 	}
-	if err := worker.syncRelease(context.Background(), "Xinrea/JLiverTool", release); err != nil {
+	if err := worker.syncRelease(context.Background(), "powerlive-io/JLiverTool", release); err != nil {
 		t.Fatal(err)
 	}
-	if !bytes.Equal(store.objects["releases/Xinrea/JLiverTool/v1.0.0/app.zip"], []byte("release")) {
+	if !bytes.Equal(store.objects["releases/powerlive-io/JLiverTool/v1.0.0/app.zip"], []byte("release")) {
 		t.Fatal("asset was not mirrored")
 	}
-	if _, ok := store.objects["releases/Xinrea/JLiverTool/v1.0.0/_manifest.json"]; !ok {
+	if _, ok := store.objects["releases/powerlive-io/JLiverTool/v1.0.0/_manifest.json"]; !ok {
 		t.Fatal("completion manifest was not written")
 	}
 
 	assetServer.Close()
-	if err := worker.syncRelease(context.Background(), "Xinrea/JLiverTool", release); err != nil {
+	if err := worker.syncRelease(context.Background(), "powerlive-io/JLiverTool", release); err != nil {
 		t.Fatalf("completed release should not download again: %v", err)
 	}
 }
@@ -99,7 +99,7 @@ func TestSyncRepositoryPollsRecentReleases(t *testing.T) {
 	var server *httptest.Server
 	server = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case "/repos/Xinrea/JoiAsk/releases":
+		case "/repos/powerlive-io/bili-messenger/releases":
 			w.Header().Set("Content-Type", "application/json")
 			_, _ = io.WriteString(w, `[{"id":2,"tag_name":"v2","assets":[{"name":"app.zip","browser_download_url":"`+server.URL+`/asset","size":3}]}]`)
 		case "/asset":
@@ -113,10 +113,10 @@ func TestSyncRepositoryPollsRecentReleases(t *testing.T) {
 	store := &memoryStore{objects: make(map[string][]byte)}
 	worker := New(store, nil, time.Minute, 5, "")
 	worker.apiBaseURL = server.URL
-	if err := worker.syncRepository(context.Background(), "Xinrea/JoiAsk"); err != nil {
+	if err := worker.syncRepository(context.Background(), "powerlive-io/bili-messenger"); err != nil {
 		t.Fatal(err)
 	}
-	if _, ok := store.objects["releases/Xinrea/JoiAsk/v2/_manifest.json"]; !ok {
+	if _, ok := store.objects["releases/powerlive-io/bili-messenger/v2/_manifest.json"]; !ok {
 		t.Fatal("polled release was not synchronized")
 	}
 }

@@ -23,9 +23,9 @@ func TestAssetURLFallsBackUntilManifestExists(t *testing.T) {
 
 	resolver := New(server.URL)
 	resolver.httpClient = server.Client()
-	githubURL := "https://github.com/Xinrea/JLiverTool/releases/download/v1/app.zip"
+	githubURL := "https://github.com/powerlive-io/JLiverTool/releases/download/v1/app.zip"
 
-	if got := resolver.AssetURL(context.Background(), "Xinrea", "JLiverTool", "v1", "app.zip", githubURL); got != githubURL {
+	if got := resolver.AssetURL(context.Background(), "powerlive-io", "JLiverTool", "v1", "app.zip", githubURL); got != githubURL {
 		t.Fatalf("fallback URL = %q, want %q", got, githubURL)
 	}
 
@@ -35,8 +35,8 @@ func TestAssetURLFallsBackUntilManifestExists(t *testing.T) {
 	resolver.mu.Unlock()
 	manifestExists = true
 
-	want := server.URL + "/releases/Xinrea/JLiverTool/v1/app.zip"
-	if got := resolver.AssetURL(context.Background(), "Xinrea", "JLiverTool", "v1", "app.zip", githubURL); got != want {
+	want := server.URL + "/releases/powerlive-io/JLiverTool/v1/app.zip"
+	if got := resolver.AssetURL(context.Background(), "powerlive-io", "JLiverTool", "v1", "app.zip", githubURL); got != want {
 		t.Fatalf("CDN URL = %q, want %q", got, want)
 	}
 }

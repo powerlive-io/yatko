@@ -6,9 +6,9 @@
 
 ## Projects
 
-- **[Bili ShadowReplay](https://app.powerlive.io/Xinrea/bili-shadowreplay)** — bilibili 直播实时切片工具
-- **[JLiverTool](https://app.powerlive.io/Xinrea/JLiverTool)** — Bilibili 弹幕机
-- **[JoiAsk](https://app.powerlive.io/Xinrea/JoiAsk)** — 开源匿名提问箱
+- **[BiliShadowReplay](https://app.powerlive.io/powerlive-io/bili-shadowreplay)** — bilibili 直播实时切片工具
+- **[JLiverTool](https://app.powerlive.io/powerlive-io/JLiverTool)** — Bilibili 弹幕机
+- **[BiliMessenger](https://app.powerlive.io/powerlive-io/bili-messenger)** — Bilibili 舰长私信群发助手
 
 ## Features
 
