@@ -1,9 +1,20 @@
 import { ProjectGrid } from "./project-grid";
 import { SITE_DOMAIN } from "@/lib/site";
+import { chromeTextButton } from "@/components/chrome";
 
 export default function Home() {
   return (
     <main className="flex-1 flex flex-col items-center justify-center px-4 py-20 min-h-[100dvh]">
+      <a
+        href="https://powerlive.io/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="返回 PowerLive 主站（在新标签页打开）"
+        className={`fixed top-4 left-4 z-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground ${chromeTextButton}`}
+      >
+        <span aria-hidden="true">←</span>
+        返回主站
+      </a>
       <div className="w-full max-w-xl space-y-12 text-center">
         <div className="space-y-5">
           <div className="space-y-2">
